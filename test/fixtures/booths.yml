@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  vendor_name: MyString
+  monthly_fee: 9.99
+  occupied: false
+
+two:
+  number: 1
+  vendor_name: MyString
+  monthly_fee: 9.99
+  occupied: false

@@ -1,0 +1,108 @@
+
+<% content_for :title, "Business Settings | Boothy" %>
+
+<div class="mx-auto max-w-3xl space-y-8">
+
+  <div>
+    <%= link_to "< BACK TO OWNER CONSOLE",
+        owner_path(business_id: @business.id),
+        class: "text-xs text-[#8BF0A5] hover:underline" %>
+
+    <h1 class="mt-6 text-3xl font-bold text-[#8BF0A5]">
+      &gt; BUSINESS SETTINGS_
+    </h1>
+
+    <p class="mt-3 text-sm text-[#70947A]">
+      CONFIGURE BUSINESS OPERATIONS
+    </p>
+  </div>
+
+  <section class="border border-[#45634D] bg-[#141E18] p-6">
+
+    <h2 class="text-lg font-bold text-[#8BF0A5]">
+      + BUSINESS INFORMATION
+    </h2>
+
+    <%= form_with model: @business, class: "mt-6 space-y-6" do |form| %>
+
+      <% if @business.errors.any? %>
+        <div class="border border-[#8B6B39] p-4 text-[#F6B65E]">
+          <%= @business.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :name, "BUSINESS NAME",
+            class: "block text-xs text-[#70947A]" %>
+
+        <%= form.text_field :name,
+            required: true,
+            class: "mt-2 w-full border border-[#45634D] bg-[#0B110D] p-3 text-[#8BF0A5]" %>
+      </div>
+
+      <div>
+        <%= form.label :business_type, "BUSINESS TYPE",
+            class: "block text-xs text-[#70947A]" %>
+
+        <%= form.text_field :business_type,
+            class: "mt-2 w-full border border-[#45634D] bg-[#0B110D] p-3 text-[#8BF0A5]" %>
+      </div>
+
+      <div>
+        <%= form.label :monthly_expenses, "MONTHLY EXPENSES ($)",
+            class: "block text-xs text-[#70947A]" %>
+
+        <%= form.number_field :monthly_expenses,
+            min: 0, step: "0.01", required: true,
+            class: "mt-2 w-full border border-[#45634D] bg-[#0B110D] p-3 text-[#8BF0A5]" %>
+      </div>
+
+      <div>
+        <%= form.label :default_monthly_fee, "DEFAULT BOOTH RENT ($)",
+            class: "block text-xs text-[#70947A]" %>
+
+        <%= form.number_field :default_monthly_fee,
+            min: 0, step: "0.01", required: true,
+            class: "mt-2 w-full border border-[#45634D] bg-[#0B110D] p-3 text-[#8BF0A5]" %>
+      </div>
+
+      <%= form.submit "[ SAVE BUSINESS SETTINGS ]",
+          class: "cursor-pointer border border-[#8BF0A5] bg-[#203527] px-5 py-3 text-sm font-bold text-[#8BF0A5] hover:bg-[#30563B]" %>
+
+    <% end %>
+
+  </section>
+
+  <section class="border border-[#45634D] bg-[#141E18] p-6">
+
+    <h2 class="text-lg font-bold text-[#8BF0A5]">
+      + BOOTH CAPACITY
+    </h2>
+
+    <p class="mt-3 text-sm text-[#B7CDBE]">
+      CURRENT BOOTHS: <%= @business.booths.count %>
+    </p>
+
+    <%= form_with url: resize_business_path(@business),
+        method: :patch, class: "mt-6 space-y-4" do |form| %>
+
+      <%= form.label :booth_count, "TOTAL NUMBER OF BOOTHS",
+          class: "block text-xs text-[#70947A]" %>
+
+      <%= form.number_field :booth_count,
+          value: @business.booths.count,
+          min: 1, max: 100, required: true,
+          class: "w-full max-w-xs border border-[#45634D] bg-[#0B110D] p-3 text-[#8BF0A5]" %>
+
+      <p class="text-xs text-[#70947A]">
+        Reducing capacity only removes vacant booths.
+      </p>
+
+      <%= form.submit "[ UPDATE BOOTH CAPACITY ]",
+          class: "block cursor-pointer border border-[#8BF0A5] bg-[#203527] px-5 py-3 text-sm font-bold text-[#8BF0A5] hover:bg-[#30563B]" %>
+
+    <% end %>
+
+  </section>
+
+</div>

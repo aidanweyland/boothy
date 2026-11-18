@@ -1,0 +1,149 @@
+
+<% content_for :title, "Find your space | Boothy" %>
+
+<div class="space-y-16">
+
+  <% if notice.present? %>
+    <p class="rounded-xl bg-green-50 px-5 py-3 font-medium text-green-700" id="notice">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden rounded-[2rem] bg-[#F0E9FF] px-7 py-14 sm:px-12 sm:py-20">
+    <div class="relative z-10 max-w-2xl">
+      <p class="mb-5 inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-[#5936A5]">
+        A little space for your big idea
+      </p>
+
+      <h1 class="text-5xl font-black leading-tight tracking-tight text-[#29243B] sm:text-7xl">
+        Find your space.<br>
+        <span class="text-[#7655B8]">Make it happen.</span>
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-[#625B70]">
+        Discover flexible spaces for your next big thing — from pop-up shops and food counters to salon chairs and creative workspaces.
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-3">
+        <%= link_to "Explore available spaces", "#spaces", class: "rounded-full bg-[#5936A5] px-7 py-4 font-bold text-white shadow-sm transition hover:bg-[#452782]" %>
+        <%= link_to "List your business's space", new_space_path, class: "rounded-full bg-white px-7 py-4 font-bold text-[#5936A5] transition hover:bg-[#F9F5FF]" %>
+      </div>
+    </div>
+
+    <div class="pointer-events-none absolute -right-12 -top-12 h-56 w-56 rounded-full bg-[#FFD2C7] opacity-80 sm:h-80 sm:w-80"></div>
+    <div class="pointer-events-none absolute -bottom-24 right-24 h-48 w-48 rounded-full bg-[#D9CBFF] opacity-80"></div>
+    <div class="pointer-events-none absolute right-16 top-1/2 hidden -translate-y-1/2 rotate-12 text-8xl sm:block">✨</div>
+  </section>
+
+  <!-- Categories -->
+  <section>
+    <div class="mb-7">
+      <p class="text-sm font-bold uppercase tracking-widest text-[#FF765F]">Find your fit</p>
+      <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">What kind of space do you need?</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <a href="#spaces" class="group rounded-2xl border border-[#EEE5DA] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
+        <span class="text-4xl">🛍️</span>
+        <h3 class="mt-5 text-lg font-bold">Pop-up retail</h3>
+        <p class="mt-2 text-sm text-[#766F80]">Shops, stalls and vendor markets</p>
+      </a>
+
+      <a href="#spaces" class="group rounded-2xl border border-[#EEE5DA] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
+        <span class="text-4xl">🍜</span>
+        <h3 class="mt-5 text-lg font-bold">Food spaces</h3>
+        <p class="mt-2 text-sm text-[#766F80]">Kitchens, counters and food halls</p>
+      </a>
+
+      <a href="#spaces" class="group rounded-2xl border border-[#EEE5DA] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
+        <span class="text-4xl">💇</span>
+        <h3 class="mt-5 text-lg font-bold">Beauty & wellness</h3>
+        <p class="mt-2 text-sm text-[#766F80]">Salon chairs and treatment rooms</p>
+      </a>
+
+      <a href="#spaces" class="group rounded-2xl border border-[#EEE5DA] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
+        <span class="text-4xl">💻</span>
+        <h3 class="mt-5 text-lg font-bold">Workspaces</h3>
+        <p class="mt-2 text-sm text-[#766F80]">Desks and shared offices</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Listings -->
+  <section id="spaces">
+    <div class="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-widest text-[#FF765F]">The possibilities</p>
+        <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Spaces to explore</h2>
+      </div>
+      <p class="text-sm text-[#766F80]">Discover somewhere to make things happen.</p>
+    </div>
+
+    <% if @spaces.any? %>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <% @spaces.each do |space| %>
+          <article class="overflow-hidden rounded-2xl border border-[#EEE5DA] bg-white transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="flex h-44 items-center justify-center bg-[#F0E9FF] text-6xl">
+              ✨
+            </div>
+
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <span class="rounded-full bg-[#FFF0EB] px-3 py-1 text-xs font-bold text-[#C45140]">
+                  <%= space.space_type.to_s.humanize.presence || "Flexible space" %>
+                </span>
+
+                <% if space.available? %>
+                  <span class="text-xs font-bold text-green-700">Available</span>
+                <% else %>
+                  <span class="text-xs font-bold text-[#766F80]">Unavailable</span>
+                <% end %>
+              </div>
+
+              <h3 class="mt-4 text-xl font-bold">
+                <%= link_to space.name, space_path(space), class: "hover:text-[#7655B8]" %>
+              </h3>
+
+              <p class="mt-2 min-h-12 text-sm leading-relaxed text-[#766F80]">
+                <%= space.description.to_s.truncate(110) %>
+              </p>
+
+              <div class="mt-5 flex items-center justify-between border-t border-[#EEE5DA] pt-4">
+                <p class="font-bold text-[#5936A5]">
+                  <% if space.daily_rate.present? %>
+                    <%= number_to_currency(space.daily_rate) %><span class="text-xs font-normal text-[#766F80]"> / day</span>
+                  <% else %>
+                    <span class="text-sm">Contact for pricing</span>
+                  <% end %>
+                </p>
+
+                <%= link_to "View space →", space_path(space), class: "text-sm font-bold text-[#5936A5] hover:text-[#7655B8]" %>
+              </div>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="rounded-2xl border-2 border-dashed border-[#D9CBFF] bg-white px-6 py-14 text-center">
+        <p class="text-5xl">🏡</p>
+        <h3 class="mt-5 text-2xl font-bold">Your next opportunity starts here.</h3>
+        <p class="mx-auto mt-3 max-w-md text-[#766F80]">
+          There aren't any spaces listed yet. Be the first business to add a space to Boothy.
+        </p>
+        <%= link_to "Add the first space", new_space_path, class: "mt-7 inline-block rounded-full bg-[#5936A5] px-7 py-4 font-bold text-white transition hover:bg-[#452782]" %>
+      </div>
+    <% end %>
+  </section>
+
+  <!-- Business CTA -->
+  <section class="rounded-[2rem] bg-[#29243B] px-7 py-12 text-center text-white sm:px-12">
+    <p class="text-sm font-bold uppercase tracking-widest text-[#FFB4A5]">For businesses</p>
+    <h2 class="mx-auto mt-3 max-w-2xl text-3xl font-black sm:text-4xl">Got a space that could be someone else's next big thing?</h2>
+    <p class="mx-auto mt-4 max-w-xl text-[#D8D2E3]">
+      Put your available space in front of people looking for somewhere to grow their business.
+    </p>
+    <%= link_to "List your space on Boothy", new_space_path, class: "mt-8 inline-block rounded-full bg-[#FF8B75] px-7 py-4 font-bold text-[#29243B] transition hover:bg-[#FFAA99]" %>
+  </section>
+
+</div>

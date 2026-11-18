@@ -1,0 +1,134 @@
+
+<% content_for :title, "Vendor Console | Boothy" %>
+
+<div class="space-y-8">
+
+  <div>
+    <p class="text-xs text-[#70947A]">
+      BOOTHY_OS / VENDOR_CONSOLE / INK_HOUSE
+    </p>
+
+    <h1 class="mt-4 text-3xl font-bold text-[#8BF0A5] sm:text-4xl">
+      &gt; WELCOME, <%= @booth&.vendor_name&.upcase || "VENDOR" %>_
+    </h1>
+
+    <p class="mt-3 text-sm text-[#B7CDBE]">
+      YOUR PERSONAL WORKSPACE TERMINAL
+    </p>
+  </div>
+
+  <% if @booth %>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+
+      <div class="border border-[#45634D] bg-[#18251D] p-6">
+        <p class="text-xs text-[#70947A]">ASSIGNED BOOTH</p>
+        <p class="mt-4 text-4xl font-bold text-[#8BF0A5]">
+          <%= @booth.number.to_s.rjust(2, "0") %>
+        </p>
+      </div>
+
+      <div class="border border-[#45634D] bg-[#18251D] p-6">
+        <p class="text-xs text-[#70947A]">MONTHLY RENT</p>
+        <p class="mt-4 text-3xl font-bold text-[#8BF0A5]">
+          <%= number_to_currency(@booth.monthly_fee) %>
+        </p>
+      </div>
+
+      <div class="border border-[#45634D] bg-[#18251D] p-6">
+        <p class="text-xs text-[#70947A]">RENTAL STATUS</p>
+        <p class="mt-4 text-xl font-bold <%= @booth.occupied? ? 'text-[#8BF0A5]' : 'text-[#F6B65E]' %>">
+          <%= @booth.occupied? ? "ACTIVE" : "INACTIVE" %>
+        </p>
+      </div>
+
+    </div>
+
+    <section class="border border-[#45634D] bg-[#141E18] p-6 sm:p-8">
+
+      <h2 class="text-xl font-bold text-[#8BF0A5]">
+        + YOUR WORKSPACE
+      </h2>
+
+      <p class="mt-3 text-sm text-[#B7CDBE]">
+        INK HOUSE TATTOO STUDIO
+      </p>
+
+      <div class="mt-8 overflow-x-auto border border-[#355640] bg-[#0B110D] p-6">
+
+        <div class="mx-auto max-w-sm text-center text-[#8BF0A5]">
+
+          <pre class="text-sm leading-relaxed">
++----------------------+
+|                      |
+|    INK HOUSE         |
+|                      |
+|    +------------+    |
+|    |            |    |
+|    |  BOOTH <%= @booth.number.to_s.rjust(2, "0") %>  |    |
+|    |            |    |
+|    +------------+    |
+|                      |
+|   [ YOUR STATION ]   |
+|                      |
++----------------------+
+          </pre>
+
+        </div>
+      </div>
+
+      <p class="mt-5 text-xs text-[#70947A]">
+        &gt; WORKSPACE ASSIGNMENT CONFIRMED_
+      </p>
+
+    </section>
+
+    <section class="border border-[#45634D] bg-[#18251D] p-6 sm:p-8">
+
+      <h2 class="text-xl font-bold text-[#8BF0A5]">
+        + RENTAL INFORMATION
+      </h2>
+
+      <div class="mt-6 space-y-4 text-sm">
+
+        <div class="flex flex-wrap justify-between gap-3 border-b border-[#355640] pb-4">
+          <span class="text-[#70947A]">BUSINESS</span>
+          <span>INK HOUSE TATTOO STUDIO</span>
+        </div>
+
+        <div class="flex flex-wrap justify-between gap-3 border-b border-[#355640] pb-4">
+          <span class="text-[#70947A]">BOOTH NUMBER</span>
+          <span><%= @booth.number %></span>
+        </div>
+
+        <div class="flex flex-wrap justify-between gap-3 border-b border-[#355640] pb-4">
+          <span class="text-[#70947A]">MONTHLY RENT</span>
+          <span class="text-[#8BF0A5]">
+            <%= number_to_currency(@booth.monthly_fee) %>
+          </span>
+        </div>
+
+        <div class="flex flex-wrap justify-between gap-3">
+          <span class="text-[#70947A]">STATUS</span>
+          <span class="text-[#8BF0A5]">
+            <%= @booth.occupied? ? "ACTIVE" : "INACTIVE" %>
+          </span>
+        </div>
+
+      </div>
+
+      <p class="mt-8 text-xs text-[#70947A]">
+        &gt; RENTAL DETAILS ARE MANAGED BY THE BUSINESS OWNER_
+      </p>
+
+    </section>
+
+  <% else %>
+
+    <div class="border border-[#8B6B39] bg-[#292315] p-6 text-[#F6B65E]">
+      &gt; ERROR: NO BOOTH ASSIGNMENT FOUND
+    </div>
+
+  <% end %>
+
+</div>
